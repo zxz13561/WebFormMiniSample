@@ -12,12 +12,6 @@ namespace DBFunctions
 {
     public class AccountingManager
     {
-        public static string GetConnectionString()
-        { 
-            string val = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-            return val;
-        }
-
         /// <summary>
         /// 檢查流水帳清單
         /// </summary>
@@ -25,7 +19,7 @@ namespace DBFunctions
         /// <returns></returns>
         public static DataTable GetAccountingList(string userID)
         {
-            string connStr = GetConnectionString();
+            string connStr = DBHelper.GetConnectionString();
             string dbCommand =
                 @"SELECT [ID],[Caption],[Amount],[ActType],[CreateDate]
                      FROM Accounting
@@ -60,7 +54,7 @@ namespace DBFunctions
 
         public static DataRow GetAccounting(int id, string userID)
         {
-            string connStr = GetConnectionString();
+            string connStr = DBHelper.GetConnectionString();
             string dbCommand =
                 @"SELECT 
                         [ID],
@@ -121,7 +115,7 @@ namespace DBFunctions
                 throw new ArgumentException("Act Type must be 0 or 1");
             // <<< check input
 
-            string connStr = GetConnectionString();
+            string connStr = DBHelper.GetConnectionString();
             string dbCommand =
                 @"INSERT INTO [dbo].[Accounting]
                         ([UserID]
@@ -173,7 +167,7 @@ namespace DBFunctions
                 throw new ArgumentException("Act Type must be 0 or 1");
             // <<< check input
 
-            string connStr = GetConnectionString();
+            string connStr = DBHelper.GetConnectionString();
             string dbCommand =
                 @"UPDATE [Accounting]
                      SET
@@ -220,7 +214,7 @@ namespace DBFunctions
 
         public static void DeleteAccounting(int ID)
         {
-            string connStr = GetConnectionString();
+            string connStr = DBHelper.GetConnectionString();
             string dbCommand =
                 @"DELETE [Accounting]
                     WHERE

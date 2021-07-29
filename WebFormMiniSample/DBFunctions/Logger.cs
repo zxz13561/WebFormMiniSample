@@ -10,7 +10,13 @@ namespace DBFunctions
     {
         public static void LogWriter(Exception ex)
         {
-            throw new ArgumentException("Error happend!!");
+            string msg =
+                $@" {DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}
+                        {ex.ToString()}
+                ";
+
+            System.IO.File.AppendAllText("E:\\Practice\\Log.log", msg);
+            throw ex;
         }
     }
 }

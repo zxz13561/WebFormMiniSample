@@ -11,16 +11,9 @@ namespace DBFunctions
 {
     public class UserInfoManager
     {
-        public static string GetConnectionString()
-        {
-            //string val = ConfigurationManager.AppSettings["ConnectionString"];
-            string val = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-            return val;
-        }
-
         public static DataRow GetUserInfoByAccount(string _account)
         {
-            string connectionString = GetConnectionString();
+            string connectionString = DBHelper.GetConnectionString();
             string dbCommandString =
                 @"SELECT [ID],[Account],[PWD],[Name],[Email]
                      FROM UserInfo
