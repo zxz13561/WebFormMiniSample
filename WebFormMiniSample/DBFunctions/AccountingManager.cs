@@ -106,27 +106,21 @@ namespace DBFunctions
                         @body)
                 ";
 
-            using (SqlConnection conn = new SqlConnection(connStr))
-            {
-                using (SqlCommand comm = new SqlCommand(dbCommand, conn))
-                {
-                    comm.Parameters.AddWithValue("@userID", userID);
-                    comm.Parameters.AddWithValue("@caption", caption);
-                    comm.Parameters.AddWithValue("@amount", amount);
-                    comm.Parameters.AddWithValue("@actType", actType);
-                    comm.Parameters.AddWithValue("@createDate", DateTime.Now);
-                    comm.Parameters.AddWithValue("@body", body);
+            List<SqlParameter> parmList = new List<SqlParameter>();
+            parmList.Add(new SqlParameter("@userID", userID));
+            parmList.Add(new SqlParameter("@caption", caption));
+            parmList.Add(new SqlParameter("@amount", amount));
+            parmList.Add(new SqlParameter("@actType", actType));
+            parmList.Add(new SqlParameter("@createDate", DateTime.Now));
+            parmList.Add(new SqlParameter("@body", body));
 
-                    try
-                    {
-                        conn.Open();
-                        var reader = comm.ExecuteNonQuery();
-                    }
-                    catch (Exception ex)
-                    {
-                        Logger.LogWriter(ex);
-                    }
-                }
+            try
+            {
+                DBHelper.ModifyDatas(connStr, dbCommand, parmList);
+            }
+            catch (Exception ex)
+            {
+                Logger.LogWriter(ex);
             }
         }
 
@@ -154,34 +148,28 @@ namespace DBFunctions
                         ID = @id
                 ";
 
-            using (SqlConnection conn = new SqlConnection(connStr))
+            List<SqlParameter> parmList = new List<SqlParameter>();
+            parmList.Add(new SqlParameter("@userID", userID));
+            parmList.Add(new SqlParameter("@caption", caption));
+            parmList.Add(new SqlParameter("@amount", amount));
+            parmList.Add(new SqlParameter("@actType", actType));
+            parmList.Add(new SqlParameter("@createDate", DateTime.Now));
+            parmList.Add(new SqlParameter("@body", body));
+            parmList.Add(new SqlParameter("@id", ID));
+
+            try
             {
-                using (SqlCommand comm = new SqlCommand(dbCommand, conn))
-                {
-                    comm.Parameters.AddWithValue("@userID", userID);
-                    comm.Parameters.AddWithValue("@caption", caption);
-                    comm.Parameters.AddWithValue("@amount", amount);
-                    comm.Parameters.AddWithValue("@actType", actType);
-                    comm.Parameters.AddWithValue("@createDate", DateTime.Now);
-                    comm.Parameters.AddWithValue("@body", body);
-                    comm.Parameters.AddWithValue("@id", ID);
+                int effectRows = DBHelper.ModifyDatas(connStr, dbCommand, parmList);
 
-                    try
-                    {
-                        conn.Open();
-                        int effectRows = comm.ExecuteNonQuery();
-
-                        if (effectRows == 1)
-                            return true;
-                        else
-                            return false;
-                    }
-                    catch (Exception ex)
-                    {
-                        Logger.LogWriter(ex);
-                        return false;
-                    }
-                }
+                if (effectRows == 1)
+                    return true;
+                else
+                    return false;
+            }
+            catch (Exception ex)
+            {
+                Logger.LogWriter(ex);
+                return false;
             }
         }
 
@@ -194,23 +182,17 @@ namespace DBFunctions
                         ID = @id
                 ";
 
-            using (SqlConnection conn = new SqlConnection(connStr))
-            {
-                using (SqlCommand comm = new SqlCommand(dbCommand, conn))
-                {
-                    comm.Parameters.AddWithValue("@id", ID);
+            List<SqlParameter> parmList = new List<SqlParameter>();
+            parmList.Add(new SqlParameter("@id", ID));
 
-                    try
-                    {
-                        conn.Open();
-                        comm.ExecuteNonQuery();
-                    }
-                    catch (Exception ex)
-                    {
-                        Logger.LogWriter(ex);
-                    }
-                }
+            try
+            {
+                DBHelper.ModifyDatas(connStr, dbCommand, parmList);
             }
-        }
+            catch (Exception ex)
+            {
+                Logger.LogWriter(ex);
+            }
+         }
     }
 }

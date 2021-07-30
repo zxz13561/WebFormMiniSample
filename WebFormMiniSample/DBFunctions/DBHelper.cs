@@ -58,5 +58,19 @@ namespace DBFunctions
                 }
             }
         }
+
+        public static int ModifyDatas(string connStr, string dbCommand, List<SqlParameter> parmList)
+        {
+            using (SqlConnection conn = new SqlConnection(connStr))
+            {
+                using (SqlCommand comm = new SqlCommand(dbCommand, conn))
+                {
+                    comm.Parameters.AddRange(parmList.ToArray());
+                    conn.Open();
+                    int effectRowsCount = comm.ExecuteNonQuery();
+                    return effectRowsCount;
+                }
+            }
+        }
     }
 }
