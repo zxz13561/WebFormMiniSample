@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using AccointingNote.Auth;
 using DBFunctions;
 
 namespace AccountingNote
@@ -28,33 +29,16 @@ namespace AccountingNote
         {
             string inp_Acc = this.txtAcc.Text;
             string inp_Pwd = this.txtPwd.Text;
+            string msg;
 
-            // check empty
-            if(string.IsNullOrWhiteSpace(inp_Acc) || string.IsNullOrWhiteSpace(inp_Pwd))
+            if(!AuthManager.TryLogin(inp_Acc, inp_Pwd, out msg))
             {
-                this.ltlMsg.Text = "Account / Pwd is required.";
+                this.ltlMsg.Text = msg;
                 return;
             }
 
-            var dr = UserInfoManager.GetUserInfoByAccount(inp_Acc);
+            Response.Redirect("/SystemAdmin/UserInfo.aspx");
 
-            if(dr == null)
-            {
-                this.ltlMsg.Text = "Account doesn't exists.";
-                return;
-            }
-
-            // check account / password
-            if (string.Compare(dr["Account"].ToString(), inp_Acc, true) == 0 && string.Compare(dr["PWD"].ToString(), inp_Pwd, false) == 0)
-            {
-                this.Session["UserLoginInfo"] = dr["Account"].ToString();
-                Response.Redirect("/SystemAdmin/UserInfo.aspx");
-            }
-            else
-            {
-                this.ltlMsg.Text = "Login fail. Please check Account / PWD";
-                return;
-            }
         }
     }
 }

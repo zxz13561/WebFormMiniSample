@@ -45,9 +45,48 @@ namespace AccointingNote.Auth
             return model;
         }
 
+        /// <summary> 登出 </summary>
         public static void Logout()
         {
             HttpContext.Current.Session["UserLoginInfo"] = null;
+        }
+
+        /// <summary>
+        /// 嘗試登入
+        /// </summary>
+        /// <param name="account"></param>
+        /// <param name="pwd"></param>
+        /// <param name="errMsg"></param>
+        /// <returns></returns>
+        public static bool TryLogin(string account, string pwd, out string errMsg)
+        {
+            // check empty
+            if (string.IsNullOrWhiteSpace(account) || string.IsNullOrWhiteSpace(pwd))
+            {
+                errMsg = "Account / Pwd is required.";
+                return false;
+            }
+
+            var dr = UserInfoManager.GetUserInfoByAccount(account);
+
+            if (dr == null)
+            {
+                errMsg = "Account doesn't exists.";
+                return false;
+            }
+
+            // check account / password
+            if (string.Compare(dr["Account"].ToString(), account, true) == 0 && string.Compare(dr["PWD"].ToString(), pwd, false) == 0)
+            {
+                HttpContext.Current.Session["UserLoginInfo"] = dr["Account"].ToString();
+                errMsg = string.Empty;
+                return true;
+            }
+            else
+            {
+                errMsg = "Login fail. Please check Account / PWD";
+                return false;
+            }
         }
     }
 }
