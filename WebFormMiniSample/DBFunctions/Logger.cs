@@ -14,8 +14,16 @@ namespace DBFunctions
                 $@" {DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}
                         {ex.ToString()}
                 ";
+            string LogPath = "E:\\Practice\\Log.log";
+            string FolderPath = System.IO.Path.GetDirectoryName(LogPath);
 
-            System.IO.File.AppendAllText("E:\\Practice\\Log.log", msg);
+            if (!System.IO.Directory.Exists(FolderPath))
+                System.IO.Directory.CreateDirectory(FolderPath);
+
+            if (!System.IO.File.Exists(LogPath))
+                System.IO.File.Create(LogPath);
+
+            System.IO.File.AppendAllText(LogPath, msg);
             throw ex;
         }
     }
