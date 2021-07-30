@@ -1,4 +1,5 @@
-﻿using DBFunctions;
+﻿using AccointingNote.Auth;
+using DBFunctions;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -15,7 +16,7 @@ namespace AccountingNote.SystemAdmin
         {
             if (!this.IsPostBack)
             {
-                if (this.Session["UserLoginInfo"] == null)
+                if (!AuthManager.IsLogined())
                 {
                     Response.Redirect("/Login.aspx");
                     return;
