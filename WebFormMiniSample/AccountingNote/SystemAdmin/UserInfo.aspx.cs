@@ -14,9 +14,9 @@ namespace AccountingNote.SystemAdmin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!this.IsPostBack)
+            if (!this.IsPostBack) //check already press button or not
             {
-                if (!AuthManager.IsLogined())
+                if (!AuthManager.IsLogined()) // redirect to login page if user not login
                 {
                     Response.Redirect("/Login.aspx");
                     return;
@@ -27,7 +27,6 @@ namespace AccountingNote.SystemAdmin
                 // if user not exist, redirect to login page
                 if (currentUser == null)
                 {
-                    this.Session["UserLoginInfo"] = null;
                     Response.Redirect("/Login.aspx");
                     return;
                 }
@@ -40,7 +39,7 @@ namespace AccountingNote.SystemAdmin
 
         protected void btnLogout_Click(object sender, EventArgs e)
         {
-            this.Session["UserLoginInfo"] = null;
+            AuthManager.Logout(); // Logout account
             Response.Redirect("/Login.aspx");
         }
     }

@@ -30,6 +30,11 @@ namespace AccointingNote.Auth
 
             DataRow dr = UserInfoManager.GetUserInfoByAccount(account);
             //return dr;
+            if(dr == null)
+            {
+                HttpContext.Current.Session["UserLoginInfo"] = null;
+                return null;
+            }
 
             UserInfoModel model = new UserInfoModel();
             model.ID = dr["ID"].ToString();
@@ -38,6 +43,11 @@ namespace AccointingNote.Auth
             model.Email = dr["Email"].ToString();
 
             return model;
+        }
+
+        public static void Logout()
+        {
+            HttpContext.Current.Session["UserLoginInfo"] = null;
         }
     }
 }

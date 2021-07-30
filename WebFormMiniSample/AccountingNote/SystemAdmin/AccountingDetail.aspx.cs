@@ -81,10 +81,15 @@ namespace AccountingNote.SystemAdmin
                 return;
             }
 
-            string account = this.Session["UserLoginInfo"] as string;
-            var dr = UserInfoManager.GetUserInfoByAccount(account);
+            var currentUser = AuthManager.GetCurrecntUser();
+            if (currentUser == null)
+            {
+                this.Session["UserLoginInfo"] = null;
+                Response.Redirect("/Login.aspx");
+                return;
+            }
 
-            string userID = dr["ID"].ToString();
+            string userID = currentUser.ID.ToString();
             string actTypeText = this.ddlActType.SelectedValue;
             string amountText = this.txtAmount.Text;
             string caption = this.txtCaption.Text;
