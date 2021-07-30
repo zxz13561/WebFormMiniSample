@@ -21,17 +21,18 @@ namespace AccountingNote.SystemAdmin
                 return;
             }
 
-            string account = this.Session["UserLoginInfo"] as string;
-            var dr = UserInfoManager.GetUserInfoByAccount(account);
+            var currentUser = AuthManager.GetCurrecntUser();
 
-            if(dr == null)
+            // if user not exist, redirect to login page
+            if (currentUser == null)
             {
+                this.Session["UserLoginInfo"] = null;
                 Response.Redirect("/Login.aspx");
                 return;
             }
 
             // read accounting data
-            var dt = AccountingManager.GetAccountingList(dr["ID"].ToString());
+            var dt = AccountingManager.GetAccountingList(currentUser.ID.ToString());
 
             if (dt.Rows.Count > 0) // check is empty data
             {

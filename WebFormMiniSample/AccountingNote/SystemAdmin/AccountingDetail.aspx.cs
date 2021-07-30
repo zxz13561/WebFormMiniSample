@@ -19,11 +19,12 @@ namespace AccountingNote.SystemAdmin
                 return;
             }
 
-            string account = this.Session["UserLoginInfo"] as string;
-            var dr = UserInfoManager.GetUserInfoByAccount(account);
+            var currentUser = AuthManager.GetCurrecntUser();
 
-            if (dr == null)
+            // if user not exist, redirect to login page
+            if (currentUser == null)
             {
+                this.Session["UserLoginInfo"] = null;
                 Response.Redirect("/Login.aspx");
                 return;
             }
@@ -43,7 +44,7 @@ namespace AccountingNote.SystemAdmin
                     int id;
                     if (int.TryParse(idText, out id))
                     {
-                        var drAccounting = AccountingManager.GetAccounting(id, dr["ID"].ToString());
+                        var drAccounting = AccountingManager.GetAccounting(id, currentUser.ID.ToString());
                         if (drAccounting == null)
                         {
                             this.ltlMsg.Text = "Data doesn't exist";
