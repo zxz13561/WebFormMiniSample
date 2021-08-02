@@ -43,6 +43,7 @@ namespace AccountingNote.SystemAdmin
                 this.gvAccountList.DataBind();
 
                 this.ucPager.TotalSize = dt.Rows.Count;
+                this.ucPager.Bind();
             }
             else
             {

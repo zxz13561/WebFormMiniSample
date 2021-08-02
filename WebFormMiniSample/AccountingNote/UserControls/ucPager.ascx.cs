@@ -16,8 +16,12 @@ namespace AccountingNote.UserControls
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            int totalPages = this.GetTotalPages();
+            //this.Bind();
+        }
 
+        public void Bind()
+        {
+            int totalPages = this.GetTotalPages();
             this.ltlPage.Text = $"Total {TotalSize} datas, Total {totalPages} pages, now is page {GetCurrentPage()} </br>";
 
             for (var i = 1; i <= totalPages; i++)
