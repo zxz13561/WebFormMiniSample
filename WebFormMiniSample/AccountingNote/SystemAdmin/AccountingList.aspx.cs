@@ -42,18 +42,13 @@ namespace AccountingNote.SystemAdmin
                 this.gvAccountList.DataSource = dtPaged;
                 this.gvAccountList.DataBind();
 
-                var pages = (dt.Rows.Count / 10);
-                if (dt.Rows.Count % 10 > 0)
-                    pages += 1;
-
-                this.ltl.Text = $"Total {dt.Rows.Count} datas, Total {pages} pages, now is page {GetCurrentPage()}";
+                this.ucPager.TotalSize = dt.Rows.Count;
             }
             else
             {
                 this.gvAccountList.Visible = false;
                 this.plcNoData.Visible = true;
             }
-
         }
 
         private int GetCurrentPage()
@@ -78,10 +73,20 @@ namespace AccountingNote.SystemAdmin
             DataTable dtPaged = dt.Clone();
             // dt.Copy() will error when no data inside data table
 
-            foreach (DataRow dr in dt.Rows)
+            int startIndex = (this.GetCurrentPage() - 1) * 10;
+            int endIndex = this.GetCurrentPage() * 10;
+
+            if (endIndex > dt.Rows.Count)
+                endIndex = dt.Rows.Count;
+
+            //foreach (DataRow dr in dt.Rows)
+            //for (var i = 0; i < dt.Rows.Count(); i++)
+            for (var i = startIndex; i < endIndex; i++)
             {
                 // create new data row
+                DataRow dr = dt.Rows[i];
                 var drNew = dtPaged.NewRow();
+
                 foreach (DataColumn dc in dt.Columns)
                 {
                     // get value
