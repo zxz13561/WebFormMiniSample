@@ -50,6 +50,9 @@
                     </table>
                     <asp:Button ID="btnLogout" Text="登出" runat="server" OnClick="btnLogout_Click"/>
                  </td>
+                 <td>
+                    <a href="UserList.aspx">UserList</a>
+                </td>
             </tr>
         </table>
     </form>

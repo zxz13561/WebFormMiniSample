@@ -42,6 +42,7 @@
                             </asp:TemplateField>
                         </Columns>
                     </asp:GridView>
+                    <asp:Literal Text="text" ID="ltl" runat="server" />
                     <asp:PlaceHolder runat="server" ID="plcNoData" Visible="true">
                         <p style="font-family : Arial;color : red;">
                             No data in your Accounting Note.
