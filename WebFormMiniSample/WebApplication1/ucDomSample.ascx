@@ -5,7 +5,7 @@
         <asp:Button ID="Button1" runat="server" Text="Button" />
         <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
     </asp:PlaceHolder>
-    <asp:Image ID="Image1" runat="server" />
+    <asp:Image ID="Image1" runat="server" ImageUrl="~/Img/img01.png" />
 </asp:PlaceHolder>
 
 
