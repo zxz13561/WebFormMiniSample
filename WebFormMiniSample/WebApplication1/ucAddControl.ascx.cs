@@ -11,6 +11,11 @@ namespace WebApplication1
     {
         protected void Page_Init(object sender, EventArgs e)
         {
+
+        }
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
             if (this.Session["ControlList"] != null)
             {
                 Label lbl = new Label();
@@ -34,16 +39,11 @@ namespace WebApplication1
             }
         }
 
-        protected void Page_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void btn_Click(object sender, EventArgs e)
-        {   
+        {
             // 新增項目 無法findcontrol
-            // var txt = this.FindControl("txt1") as TextBox;
-            // Response.Write(txt.Text);
+            var txt = this.FindControl("txt1") as TextBox;
+            Response.Write(txt.Text);
         }
 
         protected void Button1_Click(object sender, EventArgs e)

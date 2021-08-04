@@ -38,12 +38,12 @@ namespace AccountingNote.SystemAdmin
             {
                 var dtPaged = this.GetPageDataTable(dt);
 
+                this.ucPager2.TotalSize = dt.Rows.Count;
+                this.ucPager2.Bind();
+
                 this.plcNoData.Visible = false;
                 this.gvAccountList.DataSource = dtPaged;
                 this.gvAccountList.DataBind();
-
-                this.ucPager.TotalSize = dt.Rows.Count;
-                this.ucPager.Bind();
             }
             else
             {
